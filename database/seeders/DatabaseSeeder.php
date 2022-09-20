@@ -6,15 +6,34 @@ use App\Domain\Cart\Actions\AddCartItem;
 use App\Domain\Cart\Actions\InitializeCart;
 use App\Domain\Coupon\Coupon;
 use App\Domain\Customer\Customer;
+use App\Domain\Filter\Filter;
 use App\Domain\Product\Product;
 use App\Models\User;
+use Arr;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+
     public function run(): void
     {
-        $products = Product::factory(100)->create();
+//        $products = Product::factory(3000)->create();
+
+        Filter::factory()->count(100)->hasProducts(50)
+            ->create([
+                'type' => 'category',
+            ]);
+
+        $ids = Product::get()->pluck(['id'])->toArray();
+        $arr = Arr::random($ids,500);
+        $cities = Filter::factory(30)
+            ->create([
+            'type' => 'city',
+        ]);
+
+        foreach($cities as  $city){
+            $city->products()->attach($arr);
+        }
 
         Coupon::factory()->create();
 

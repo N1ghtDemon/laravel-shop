@@ -1,15 +1,25 @@
 @php
-/** @var \Illuminate\Pagination\LengthAwarePaginator|\App\Domain\Product\Product[] $products */
+    /** @var \Illuminate\Pagination\LengthAwarePaginator|\App\Domain\Product\Product[] $products */
 @endphp
-
+@php
+    /** @var \App\Domain\Filter\Filter[] $categories */
+    /** @var \App\Domain\Filter\Filter[] $cities */
+@endphp
 <x-app-layout title="Products">
+
+    <x-filter-box
+            :categories="$categories"
+            :cities="$cities"
+    />
+
     <div class="grid grid-cols-3 gap-12">
+
         @foreach($products as $product)
-            <x-product 
-                :title="$product->name" 
-                :price="format_money($product->getItemPrice()->pricePerItemIncludingVat())"
-                :actionUrl="action(\App\Http\Controllers\Cart\AddCartItemController::class, [$product])"
-          />
+            <x-product
+                    :title="$product->name"
+                    :price="format_money($product->getItemPrice()->pricePerItemIncludingVat())"
+                    :actionUrl="action(\App\Http\Controllers\Cart\AddCartItemController::class, [$product])"
+            />
         @endforeach
     </div>
 
