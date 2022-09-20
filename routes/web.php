@@ -12,6 +12,7 @@ use App\Http\Controllers\Orders\OrderPdfController;
 use App\Http\Controllers\Orders\OrderPdfPreviewController;
 use App\Http\Controllers\Payment\FailController;
 use App\Http\Controllers\Payment\PayController;
+use App\Http\Controllers\Products\ProductFilterController;
 use App\Http\Controllers\Products\ProductIndexController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', ProductIndexController::class);
-
+Route::get('product-filter',ProductFilterController::class)->name('productFilter');
 Route::prefix('cart')->group(function () {
     Route::get('/', CartDetailController::class);
     Route::get('/add/{product}', AddCartItemController::class);
